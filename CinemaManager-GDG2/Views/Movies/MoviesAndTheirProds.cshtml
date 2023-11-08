@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CinemaManager_GDG2.Models.Cinema.Movie>
+
+@{
+    ViewData["Title"] = "MoviesAndTheirProds";
+}
+
+<h1>MoviesAndTheirProds</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Producer Name
+            </th>
+            <th>
+                Producer Nationality
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producer.Nationality)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
