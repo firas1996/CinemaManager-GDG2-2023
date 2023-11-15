@@ -31,6 +31,10 @@ namespace CinemaManager_GDG2.Controllers
             var cinemaDbGdg2Context = _context.Movies.Include(m => m.Producer);
             return View(await cinemaDbGdg2Context.ToListAsync());
         }
+        public IActionResult MoviesAndTheirProds_UsingModel()
+        {
+            return View();
+        }
 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
