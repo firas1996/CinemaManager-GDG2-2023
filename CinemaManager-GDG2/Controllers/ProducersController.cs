@@ -1,4 +1,5 @@
 ﻿using CinemaManager_GDG2.Models.Cinema;
+using CinemaManager_GDG2.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,31 @@ namespace CinemaManager_GDG2.Controllers
         {
             _context.Movies.ToList();
             return View(_context.Producers.ToList());
+        }
+        public IActionResult ProdsAndTheirMovies_UsingModel()
+        {
+            var prods = _context.Producers.ToList();
+            var movies = _context.Movies.ToList();
+            var query = from p in prods
+                        join m in movies
+                        on p.Id equals m.ProducerId
+                        select new ProdMovie
+                        {
+                            mTitle = m.Title,
+                            mGenre = m.Genre,
+                            pName = p.Name,
+                            pNat = p.Nationality
+                        };
+            //ViewBag.q = query.ToList();
+            return View(query.ToList());
+        }
+
+        public IActionResult MyMovies(int id)
+        {
+            var movies = _context.Movies.ToList();
+            List<Movie> PM = _context.Movies.Where(m => m.ProducerId == id).ToList();
+            var PM2 = from m in movies where m.ProducerId == id select m;
+            return View(PM);
         }
 
         // GET: ProducersController/Details/5
